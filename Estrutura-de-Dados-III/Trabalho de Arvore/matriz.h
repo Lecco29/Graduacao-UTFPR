@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// no da arvore (diretorio ou arquivo)
 struct no{
     char nome[256];
     int eh_arquivo;
@@ -15,7 +14,7 @@ struct no{
 };
 typedef struct no No;
 
-// arvore de diretorios
+
 struct arvore{
     No* raiz;
     No* atual;

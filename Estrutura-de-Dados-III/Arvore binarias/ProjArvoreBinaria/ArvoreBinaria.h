@@ -14,16 +14,8 @@ int consulta_ArvBin(ArvBin *raiz, int valor);
 void preOrdem_ArvBin(ArvBin *raiz);
 void emOrdem_ArvBin(ArvBin *raiz);
 void posOrdem_ArvBin(ArvBin *raiz);
-
-// questao 2: percursos em ordem e pos-ordem
 void emordemarvore(ArvBin *raiz);
 void posordemarvbin(ArvBin *raiz);
-
-// questao 3: total de nos
 int totalnoarvore(ArvBin *raiz);
-
-// questao 4: consulta valor
 int consarvore(ArvBin *raiz, int valor);
-
-// questao 5: remove no atual
 struct NO* removearvoreatual(struct NO* atual);

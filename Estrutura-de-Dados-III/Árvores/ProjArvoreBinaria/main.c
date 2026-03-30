@@ -123,8 +123,6 @@ int main(){
 
     // exercicio 9
     printf("\n-- exercicio 9: arvore de expressao\n");
-    // (6-3) * (4-1) + 5
-    // em notacao posfixa: 6 3 - 4 1 - * 5 +
     ArvBin* arv_exp = cria_ArvBin();
     char* expressao = "63-41-*5+";
 

@@ -247,7 +247,7 @@ struct NO* removearvoreatual(struct NO* atual){
         return no2;
     }
 
-    // acha o maior da subarvore esquerda (predecessor)
+    // acha o maior da subarvore esquerda predecessor
     no1 = atual;
     no2 = atual->esq;
     while(no2->dir != NULL){

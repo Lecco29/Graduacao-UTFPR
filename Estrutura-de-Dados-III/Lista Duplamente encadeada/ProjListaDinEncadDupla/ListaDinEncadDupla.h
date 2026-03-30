@@ -19,8 +19,6 @@ int remove_lista_final(Lista* li);
 int tamanho_lista(Lista* li);
 int lista_vazia(Lista* li);
 void imprime_lista(Lista* li);
-
-// exercicios da lista
 int remove_lista_matricula(Lista* li, int matricula);
 int insere_lista_ordenada(Lista* li, struct aluno al);
 int conta_lista_nota(Lista* li, int n1);
@@ -29,8 +27,6 @@ int insere_lista_final_circular(Lista* li, struct aluno al);
 int remove_lista_inicio_circular(Lista* li);
 int remove_lista_final_circular(Lista* li);
 void percorre_lista_circular(Lista* li);
-
-// fila com ponteiros
 int inicializa_fila(Lista* li);
 int enfileirar(Lista* li, int elem);
 int desenfileirar(Lista* li, int *elem);

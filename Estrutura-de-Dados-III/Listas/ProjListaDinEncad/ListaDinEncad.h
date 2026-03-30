@@ -20,8 +20,6 @@ int tamanho_lista(Lista* li);
 int lista_vazia(Lista* li);
 int lista_cheia(Lista* li);
 void imprime_lista(Lista* li);
-
-// exercicios da lista
 struct aluno consulta_lista_matricula(Lista* li, int mat);
 struct aluno consulta_lista_posicao(Lista* li, int pos);
 int remove_lista_recursiva(Lista* li, int valor);

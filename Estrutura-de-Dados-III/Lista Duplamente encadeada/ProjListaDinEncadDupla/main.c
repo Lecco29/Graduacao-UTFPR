@@ -26,7 +26,7 @@ int main(){
     printf("\nTamanho apos remocao: %d\n",tamanho_lista(li));
 
     // teste lista circular
-    printf("\n=== TESTE LISTA CIRCULAR ===\n");
+    printf("\nTeste lista circular\n");
     Lista* li_circular = cria_lista();
 
     for(i=0; i < 3; i++)
@@ -36,7 +36,7 @@ int main(){
     percorre_lista_circular(li_circular);
 
     // teste fila
-    printf("\n=== TESTE FILA ===\n");
+    printf("\nTeste fila\n");
     Lista* fila = cria_lista();
     int elemento;
 
