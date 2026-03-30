@@ -1,0 +1,15 @@
+Link do repositorio com as respostas de cada atividade:
+
+Ponteiros: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Ponteiros
+Recursividade: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Recursividade
+Listas: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Listas
+Lista Duplamente encadeada: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Lista%20Duplamente%20encadeada
+Pilha: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Pilha
+Filas: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Filas
+Arvore binarias: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Arvore%20binarias
+Arvores: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/%C3%81rvores
+Arvores AVL: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/%C3%81rvores%20AVL
+Grafos: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Grafos
+MatrizEncadeada: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/MatrizEncadeada
+Trabalho de Arvore: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Trabalho%20de%20Arvore
+Provas: https://github.com/Lecco29/Listas-Estrutura-de-Dados-III/tree/main/Provas
