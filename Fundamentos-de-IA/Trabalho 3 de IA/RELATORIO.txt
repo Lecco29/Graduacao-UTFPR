@@ -1,0 +1,183 @@
+================================================================================
+ MINISTERIO DA EDUCACAO
+ UNIVERSIDADE TECNOLOGICA FEDERAL DO PARANA - CAMPUS SANTA HELENA
+ FUNDAMENTOS DE SISTEMAS INTELIGENTES
+ Docente: Thiago Naves
+================================================================================
+
+ TRABALHO 3 - SISTEMAS ESPECIALISTAS COM EXPERT SINTA
+ Aluno: Leonardo Jose Reis Pinto
+ Curso: Ciencia da Computacao
+
+
+--------------------------------------------------------------------------------
+ 1. INTRODUCAO
+--------------------------------------------------------------------------------
+Este trabalho consiste na construcao de DOIS sistemas especialistas utilizando o
+shell Expert SINTA (Grupo SINTA / LIA - UFC). Um sistema especialista e' um
+programa que reproduz o raciocinio de um especialista humano em um dominio
+restrito. Ele separa a BASE DE CONHECIMENTO (fatos e regras) do MOTOR DE
+INFERENCIA (que aplica as regras). O Expert SINTA usa encadeamento para tras
+(backward chaining) e trabalha com FATORES DE CONFIANCA (CNF), o que deixa o
+sistema raciocinar mesmo quando o usuario nao informa todos os dados.
+
+Os dois sistemas desenvolvidos foram:
+  - Sistema 1 - "CelebreMatch": recomenda pessoas famosas (atores/atrizes,
+    cantores(as), atletas e personagens ficticios) a partir de caracteristicas
+    fisicas e das obras/trabalhos da pessoa.
+  - Sistema 2 - "CineGuia": recomenda filmes e series, nacionais e
+    internacionais, a partir de genero, duracao, epoca, origem, publico, base
+    da historia, estilo, ATOR/ATRIZ e premiacao.
+
+
+--------------------------------------------------------------------------------
+ 2. CONCEITOS DO EXPERT SINTA UTILIZADOS
+--------------------------------------------------------------------------------
+- VARIAVEIS: representam os atributos do dominio. Podem ser:
+    * univaloradas  - assumem um unico valor (ex.: cor_cabelo);
+    * multivaloradas- assumem varios valores ao mesmo tempo (ex.: genero_obra);
+    * numericas     - (nao utilizadas neste trabalho).
+- OBJETIVO: a variavel cujo valor o sistema quer descobrir. Nos dois sistemas o
+  objetivo (celebridade / filme) e' MULTIVALORADO, de modo que o sistema atua
+  como RECOMENDADOR, retornando uma LISTA de sugestoes ordenadas pelo CNF, e nao
+  uma unica classificacao.
+- REGRAS: no formato "SE <premissas> ENTAO <conclusao> CNF x%". As premissas sao
+  ligadas pelo operador E (conjuncao). A confianca da conjuncao e' o MINIMO das
+  confiancas das premissas; a confianca da conclusao e' esse valor multiplicado
+  pelo CNF da regra.
+- CONSULTA: o motor de inferencia pergunta ao usuario o valor das variaveis e
+  dispara as regras compativeis, acumulando a confianca de cada valor do objetivo.
+
+
+--------------------------------------------------------------------------------
+ 3. SISTEMA 1 - "CELEBREMATCH"
+--------------------------------------------------------------------------------
+3.1 Objetivo
+    celebridade (multivalorada) - 35 celebridades cadastradas.
+
+3.2 Variaveis (9 de entrada + 1 objetivo)
+    tipo_celebridade (univ.) ... ator/atriz, cantor(a), atleta, personagem
+                                  ficticio, apresentador
+    genero           (univ.) ... masculino, feminino, nao se aplica
+    nacionalidade    (univ.) ... brasileira, norte-americana, britanica, outra
+    cor_cabelo       (univ.) ... preto, castanho, loiro, ruivo, branco/grisalho,
+                                  careca/sem cabelo
+    cor_olhos        (univ.) ... castanhos, azuis, verdes, outros
+    estatura         (univ.) ... baixa, media, alta
+    genero_obra      (MULTI). ... acao, drama, comedia, ficcao cientifica,
+                                  super-heroi, animacao, pop, rock, rap/hip-hop,
+                                  sertanejo/romantico, futebol, outro esporte
+    epoca_auge       (univ.) ... classica (ate 1989), 1990-2009, atual (2010+)
+    caracteristica   (MULTI). ... barba/bigode, oculos, musculoso, tatuagens,
+                                  voz grave, cabelo cacheado, sotaque marcante
+
+3.3 Base de dados
+    Foram pesquisados atributos reais de 35 celebridades de diferentes areas:
+      - Atores/atrizes (16): The Rock, Tom Cruise, DiCaprio, Brad Pitt, Robert
+        Downey Jr., Chris Hemsworth, Will Smith, Johnny Depp, Morgan Freeman,
+        Samuel L. Jackson, Scarlett Johansson, Angelina Jolie, Meryl Streep,
+        Wagner Moura, Fernanda Montenegro, Lazaro Ramos.
+      - Cantores(as) (9): Beyonce, Taylor Swift, Adele, Madonna, Michael
+        Jackson, Freddie Mercury, Eminem, Anitta, Roberto Carlos.
+      - Atletas (5): Cristiano Ronaldo, Messi, Neymar, Pele, Serena Williams.
+      - Personagens ficticios (5): Homem-Aranha, Darth Vader, Harry Potter,
+        Mickey Mouse, Coringa.
+
+3.4 Regras
+    35 regras, uma por celebridade, cada qual combinando de 4 a 7 caracteristicas
+    distintivas. Quanto mais atributos o usuario informa, mais especifica fica a
+    recomendacao.
+
+
+--------------------------------------------------------------------------------
+ 4. SISTEMA 2 - "CINEGUIA"
+--------------------------------------------------------------------------------
+4.1 Objetivo
+    filme (multivalorada) - 32 titulos cadastrados (filmes e series).
+
+4.2 Variaveis (9 de entrada + 1 objetivo)
+    genero_filme   (MULTI). ... acao, aventura, comedia, drama, ficcao
+                                cientifica, terror, suspense, romance, animacao,
+                                crime/policial, fantasia, musical, serie
+    duracao        (univ.) ... curta, media, longa, episodica (serie)
+    epoca          (univ.) ... classico (<1990), 1990-2009, recente (2010+)
+    origem         (univ.) ... nacional, estadunidense, outra
+    publico        (univ.) ... livre/familia, adolescente, adulto
+    baseado_em     (univ.) ... historia real, livro/HQ, roteiro original
+    estilo         (MULTI). ... intenso, emocionante, engracado, assustador,
+                                reflexivo, epico
+    ator_principal (MULTI). ... 22 atores/atrizes + "indiferente"
+    premiado       (univ.) ... sim, indiferente
+
+4.3 Base de dados
+    32 obras pesquisadas, cobrindo internacionais, cinema nacional brasileiro e
+    series:
+      - Internacionais/classicos (22): O Poderoso Chefao, Pulp Fiction,
+        Interestelar, A Origem, Vingadores: Ultimato, O Senhor dos Aneis, Matrix,
+        Forrest Gump, Titanic, Clube da Luta, O Rei Leao, Toy Story, Coringa,
+        Parasita, De Volta para o Futuro, O Iluminado, Invocacao do Mal, Star
+        Wars, Jurassic Park, Django Livre, La La Land, Avatar.
+      - Nacionais (6): Cidade de Deus, Tropa de Elite, Central do Brasil, O Auto
+        da Compadecida, Minha Mae e uma Peca, Bacurau.
+      - Series (4): Round 6, Breaking Bad, Stranger Things, La Casa de Papel.
+
+4.4 Regras (56 no total)
+    - Regras 1 a 32: recomendam por ATRIBUTOS (genero, duracao, epoca, origem,
+      publico, base, estilo, premiacao). O ator nao e' obrigatorio nelas, para
+      nao restringir consultas de quem nao se importa com o elenco.
+    - Regras 33 a 56: recomendam DIRETAMENTE POR ATOR/ATRIZ (criterio "atores"
+      pedido no enunciado). Ao marcar um nome em "ator_principal", o usuario
+      recebe os filmes daquele artista (ex.: DiCaprio -> Titanic, A Origem,
+      Django Livre).
+
+
+--------------------------------------------------------------------------------
+ 5. DECISOES DE MODELAGEM
+--------------------------------------------------------------------------------
+- Objetivos MULTIVALORADOS para que os sistemas funcionem como recomendadores
+  (lista ranqueada) e nao como classificadores de resposta unica.
+- Fator de confianca minimo de aceitacao = 0, de forma que toda sugestao com
+  CNF > 0 apareca, ordenada por confianca - util quando o usuario informa
+  poucos atributos.
+- CNFs maiores (90-95%) nas regras com correspondencia muito caracteristica
+  (ex.: O Poderoso Chefao, Cidade de Deus) e menores (80-88%) nas regras menos
+  especificas (ex.: regras de um unico ator).
+- No Sistema 2 as regras foram separadas em dois grupos (por atributo e por
+  ator) para que o usuario tenha dois caminhos de consulta sem que as premissas
+  de um grupo atrapalhem o outro.
+
+
+--------------------------------------------------------------------------------
+ 6. EXECUCAO NO EXPERT SINTA
+--------------------------------------------------------------------------------
+O Expert SINTA armazena a base em formato proprietario (.bcm) e nao possui
+importacao por texto; portanto as bases foram montadas digitando-se variaveis,
+objetivos e regras dentro do shell e salvas como CelebreMatch.bcm e CineGuia.bcm.
+O passo a passo completo de construcao e os roteiros de teste estao no arquivo
+"GUIA_Expert_SINTA.txt". A consulta e' iniciada em Consulta > Iniciar; ao final o
+sistema exibe a lista de recomendacoes ordenada pelo fator de confianca, com os
+recursos de explicacao "Por que?" e "Como?".
+
+
+--------------------------------------------------------------------------------
+ 7. CONCLUSAO
+--------------------------------------------------------------------------------
+Foram construidos dois sistemas especialistas no Expert SINTA. O Sistema 1 tem
+35 celebridades e 35 regras; o Sistema 2 tem 32 titulos e 56 regras. Com isso o
+trabalho cobre os requisitos do enunciado: base de dados completa, muitas
+regras, todos os objetivos e variaveis definidos, e os sistemas rodando no
+shell. Como os objetivos sao multivalorados e cada regra tem um fator de
+confianca, os dois sistemas funcionam como recomendadores: mesmo quando o
+usuario responde poucas perguntas, eles devolvem uma lista de sugestoes
+ordenada por grau de certeza.
+
+
+--------------------------------------------------------------------------------
+ 8. ARQUIVOS ENTREGUES
+--------------------------------------------------------------------------------
+  Sistema1_Celebridades.txt  - especificacao completa da base 1
+  Sistema2_Filmes.txt        - especificacao completa da base 2
+  GUIA_Expert_SINTA.txt      - guia de montagem e execucao no shell
+  RELATORIO.txt              - este relatorio
+  (CelebreMatch.bcm e CineGuia.bcm sao gerados ao salvar as bases no SINTA)
+================================================================================

@@ -1,0 +1,477 @@
+================================================================================
+ SISTEMA ESPECIALISTA 1  -  "CelebreMatch"
+ Recomendacao de pessoas famosas a partir de caracteristicas fisicas e obras
+ Shell: Expert SINTA  |  FUNDAMENTOS DE SISTEMAS INTELIGENTES - Trabalho 3
+================================================================================
+
+COMO USAR ESTE ARQUIVO
+----------------------
+O Expert SINTA NAO importa texto: a base e' montada digitando dentro do shell e
+salva como .bcm. Este arquivo e' o "roteiro" para a transcricao. Monte na ordem:
+  1) Cadastre as VARIAVEIS e seus VALORES (secao 2).
+  2) Defina o(s) OBJETIVO(S) (secao 3).
+  3) Digite as PERGUNTAS de cada variavel (secao 4).
+  4) Cadastre as REGRAS (secao 5), uma a uma.
+Veja o passo a passo detalhado em "GUIA_Expert_SINTA.txt".
+
+Sintaxe de regra no SINTA:
+  SE <variavel> = <valor> [E/OU <variavel> = <valor> ...]
+  ENTAO <objetivo> = <valor> CNF <0-100>%
+O "E" calcula a confianca da conjuncao pelo MINIMO das premissas; o objetivo e'
+MULTIVALORADO, entao varias celebridades podem ser sugeridas e o SINTA as ordena
+pelo fator de confianca (CNF).
+
+
+================================================================================
+ 1. SOBRE O SISTEMA  (preencher em "Sistema > Informacoes")
+================================================================================
+Nome:    CelebreMatch - Recomendador de Celebridades
+Autores: Leonardo Jose Reis Pinto
+Resumo:  Sistema especialista que sugere pessoas famosas (atores/atrizes,
+         cantores(as), atletas e personagens ficticios) a partir de
+         caracteristicas fisicas (cabelo, olhos, estatura), tipo de carreira,
+         genero da obra, nacionalidade, epoca de auge e tracos marcantes.
+Operador de maior precedencia: conjuncao (E)
+Fator de confianca minimo para aceitar regra: 0
+
+
+================================================================================
+ 2. VARIAVEIS E VALORES
+================================================================================
+Todas as variaveis de PERGUNTA sao UNIVALORADAS, exceto "genero_obra" e
+"caracteristica", que sao MULTIVALORADAS. A variavel-objetivo "celebridade" e'
+MULTIVALORADA.
+
+[V1] tipo_celebridade        (univalorada)
+     - ator ou atriz
+     - cantor ou cantora
+     - atleta
+     - personagem ficticio
+     - apresentador
+
+[V2] genero                  (univalorada)
+     - masculino
+     - feminino
+     - nao se aplica
+
+[V3] nacionalidade           (univalorada)
+     - brasileira
+     - norte-americana
+     - britanica
+     - outra
+
+[V4] cor_cabelo              (univalorada)
+     - preto
+     - castanho
+     - loiro
+     - ruivo
+     - branco ou grisalho
+     - careca ou sem cabelo
+
+[V5] cor_olhos               (univalorada)
+     - castanhos
+     - azuis
+     - verdes
+     - outros
+
+[V6] estatura                (univalorada)
+     - baixa
+     - media
+     - alta
+
+[V7] genero_obra             (MULTIVALORADA)
+     - acao
+     - drama
+     - comedia
+     - ficcao cientifica
+     - super-heroi
+     - animacao
+     - pop
+     - rock
+     - rap ou hip-hop
+     - sertanejo ou romantico
+     - futebol
+     - outro esporte
+
+[V8] epoca_auge              (univalorada)
+     - classica (ate 1989)
+     - anos 1990 a 2009
+     - atual (2010 em diante)
+
+[V9] caracteristica          (MULTIVALORADA)
+     - barba ou bigode
+     - usa oculos
+     - muito musculoso(a)
+     - tatuagens
+     - voz grave marcante
+     - cabelo cacheado
+     - sotaque marcante
+
+[OBJ] celebridade            (MULTIVALORADA)  -> ver secao 3
+
+
+================================================================================
+ 3. OBJETIVO
+================================================================================
+Variavel-objetivo:  celebridade   (multivalorada)
+
+Os VALORES da variavel "celebridade" sao os nomes abaixo (cadastre todos como
+valores possiveis dessa variavel):
+
+  Dwayne Johnson (The Rock); Tom Cruise; Leonardo DiCaprio; Brad Pitt;
+  Robert Downey Jr.; Chris Hemsworth; Will Smith; Johnny Depp; Morgan Freeman;
+  Samuel L. Jackson; Scarlett Johansson; Angelina Jolie; Meryl Streep;
+  Wagner Moura; Fernanda Montenegro; Lazaro Ramos; Beyonce; Taylor Swift;
+  Adele; Madonna; Michael Jackson; Freddie Mercury; Eminem; Anitta;
+  Roberto Carlos; Cristiano Ronaldo; Lionel Messi; Neymar; Pele;
+  Serena Williams; Homem-Aranha; Darth Vader; Harry Potter; Mickey Mouse;
+  Coringa
+
+
+================================================================================
+ 4. PERGUNTAS (texto exibido ao usuario para cada variavel)
+================================================================================
+tipo_celebridade : Que tipo de celebridade voce procura?
+genero           : Qual o genero da celebridade?
+nacionalidade    : Qual a nacionalidade?
+cor_cabelo       : Qual a cor do cabelo?
+cor_olhos        : Qual a cor dos olhos?
+estatura         : Qual a estatura?
+genero_obra      : Em qual(is) genero(s) de obra/trabalho ela atua? (pode marcar varios)
+epoca_auge       : Em qual epoca ela teve/tem seu auge?
+caracteristica   : Marque os tracos marcantes que combinam (pode marcar varios):
+
+
+================================================================================
+ 5. REGRAS  (35 regras)
+================================================================================
+
+--- ATORES E ATRIZES ---
+
+Regra 1
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = careca ou sem cabelo
+E genero_obra = acao
+E caracteristica = muito musculoso(a)
+ENTAO celebridade = Dwayne Johnson (The Rock) CNF 95%
+
+Regra 2
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = castanho
+E genero_obra = acao
+E epoca_auge = anos 1990 a 2009
+ENTAO celebridade = Tom Cruise CNF 90%
+
+Regra 3
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E cor_olhos = azuis
+E genero_obra = drama
+ENTAO celebridade = Leonardo DiCaprio CNF 92%
+
+Regra 4
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = drama
+E epoca_auge = anos 1990 a 2009
+ENTAO celebridade = Brad Pitt CNF 88%
+
+Regra 5
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = castanho
+E genero_obra = super-heroi
+E caracteristica = barba ou bigode
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Robert Downey Jr. CNF 93%
+
+Regra 6
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = outra
+E cor_cabelo = loiro
+E genero_obra = super-heroi
+E caracteristica = muito musculoso(a)
+ENTAO celebridade = Chris Hemsworth CNF 90%
+
+Regra 7
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = preto
+E genero_obra = acao
+E genero_obra = comedia
+E epoca_auge = anos 1990 a 2009
+ENTAO celebridade = Will Smith CNF 88%
+
+Regra 8
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = castanho
+E genero_obra = acao
+E caracteristica = sotaque marcante
+ENTAO celebridade = Johnny Depp CNF 80%
+
+Regra 9
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = branco ou grisalho
+E genero_obra = drama
+E caracteristica = voz grave marcante
+ENTAO celebridade = Morgan Freeman CNF 94%
+
+Regra 10
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = careca ou sem cabelo
+E genero_obra = acao
+E caracteristica = voz grave marcante
+ENTAO celebridade = Samuel L. Jackson CNF 90%
+
+Regra 11
+SE tipo_celebridade = ator ou atriz
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = super-heroi
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Scarlett Johansson CNF 90%
+
+Regra 12
+SE tipo_celebridade = ator ou atriz
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = castanho
+E genero_obra = acao
+E genero_obra = drama
+ENTAO celebridade = Angelina Jolie CNF 88%
+
+Regra 13
+SE tipo_celebridade = ator ou atriz
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = drama
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Meryl Streep CNF 90%
+
+Regra 14
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = brasileira
+E cor_cabelo = castanho
+E genero_obra = drama
+E caracteristica = sotaque marcante
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Wagner Moura CNF 92%
+
+Regra 15
+SE tipo_celebridade = ator ou atriz
+E genero = feminino
+E nacionalidade = brasileira
+E cor_cabelo = branco ou grisalho
+E genero_obra = drama
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Fernanda Montenegro CNF 93%
+
+Regra 16
+SE tipo_celebridade = ator ou atriz
+E genero = masculino
+E nacionalidade = brasileira
+E cor_cabelo = preto
+E genero_obra = comedia
+E genero_obra = drama
+ENTAO celebridade = Lazaro Ramos CNF 88%
+
+--- CANTORES E CANTORAS ---
+
+Regra 17
+SE tipo_celebridade = cantor ou cantora
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = preto
+E genero_obra = pop
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Beyonce CNF 92%
+
+Regra 18
+SE tipo_celebridade = cantor ou cantora
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = pop
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Taylor Swift CNF 92%
+
+Regra 19
+SE tipo_celebridade = cantor ou cantora
+E genero = feminino
+E nacionalidade = britanica
+E cor_cabelo = castanho
+E genero_obra = pop
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Adele CNF 90%
+
+Regra 20
+SE tipo_celebridade = cantor ou cantora
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = pop
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Madonna CNF 88%
+
+Regra 21
+SE tipo_celebridade = cantor ou cantora
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = preto
+E genero_obra = pop
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Michael Jackson CNF 93%
+
+Regra 22
+SE tipo_celebridade = cantor ou cantora
+E genero = masculino
+E nacionalidade = britanica
+E cor_cabelo = preto
+E genero_obra = rock
+E caracteristica = barba ou bigode
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Freddie Mercury CNF 93%
+
+Regra 23
+SE tipo_celebridade = cantor ou cantora
+E genero = masculino
+E nacionalidade = norte-americana
+E cor_cabelo = loiro
+E genero_obra = rap ou hip-hop
+E epoca_auge = anos 1990 a 2009
+ENTAO celebridade = Eminem CNF 90%
+
+Regra 24
+SE tipo_celebridade = cantor ou cantora
+E genero = feminino
+E nacionalidade = brasileira
+E cor_cabelo = castanho
+E genero_obra = pop
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Anitta CNF 90%
+
+Regra 25
+SE tipo_celebridade = cantor ou cantora
+E genero = masculino
+E nacionalidade = brasileira
+E cor_cabelo = preto
+E genero_obra = sertanejo ou romantico
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Roberto Carlos CNF 90%
+
+--- ATLETAS ---
+
+Regra 26
+SE tipo_celebridade = atleta
+E genero = masculino
+E nacionalidade = outra
+E cor_cabelo = castanho
+E genero_obra = futebol
+E caracteristica = muito musculoso(a)
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Cristiano Ronaldo CNF 92%
+
+Regra 27
+SE tipo_celebridade = atleta
+E genero = masculino
+E nacionalidade = outra
+E cor_cabelo = castanho
+E genero_obra = futebol
+E caracteristica = barba ou bigode
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Lionel Messi CNF 92%
+
+Regra 28
+SE tipo_celebridade = atleta
+E genero = masculino
+E nacionalidade = brasileira
+E cor_cabelo = castanho
+E genero_obra = futebol
+E caracteristica = tatuagens
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Neymar CNF 90%
+
+Regra 29
+SE tipo_celebridade = atleta
+E genero = masculino
+E nacionalidade = brasileira
+E cor_cabelo = preto
+E genero_obra = futebol
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Pele CNF 92%
+
+Regra 30
+SE tipo_celebridade = atleta
+E genero = feminino
+E nacionalidade = norte-americana
+E cor_cabelo = preto
+E genero_obra = outro esporte
+E caracteristica = muito musculoso(a)
+ENTAO celebridade = Serena Williams CNF 90%
+
+--- PERSONAGENS FICTICIOS ---
+
+Regra 31
+SE tipo_celebridade = personagem ficticio
+E genero = masculino
+E nacionalidade = norte-americana
+E genero_obra = super-heroi
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Homem-Aranha CNF 90%
+
+Regra 32
+SE tipo_celebridade = personagem ficticio
+E genero = masculino
+E genero_obra = ficcao cientifica
+E caracteristica = voz grave marcante
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Darth Vader CNF 92%
+
+Regra 33
+SE tipo_celebridade = personagem ficticio
+E genero = masculino
+E nacionalidade = britanica
+E cor_cabelo = castanho
+E caracteristica = usa oculos
+E genero_obra = ficcao cientifica
+ENTAO celebridade = Harry Potter CNF 90%
+
+Regra 34
+SE tipo_celebridade = personagem ficticio
+E genero = nao se aplica
+E genero_obra = animacao
+E epoca_auge = classica (ate 1989)
+ENTAO celebridade = Mickey Mouse CNF 90%
+
+Regra 35
+SE tipo_celebridade = personagem ficticio
+E genero = masculino
+E nacionalidade = norte-americana
+E genero_obra = drama
+E genero_obra = super-heroi
+E epoca_auge = atual (2010 em diante)
+ENTAO celebridade = Coringa CNF 88%
+
+================================================================================
+ FIM DA BASE 1
+================================================================================

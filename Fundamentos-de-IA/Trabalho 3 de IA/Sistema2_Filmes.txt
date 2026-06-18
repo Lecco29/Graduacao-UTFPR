@@ -1,0 +1,554 @@
+================================================================================
+ SISTEMA ESPECIALISTA 2  -  "CineGuia"
+ Recomendacao de filmes/series por genero, duracao, epoca, origem e estilo
+ Shell: Expert SINTA  |  FUNDAMENTOS DE SISTEMAS INTELIGENTES - Trabalho 3
+================================================================================
+
+COMO USAR ESTE ARQUIVO
+----------------------
+Mesma logica do Sistema 1: monte VARIAVEIS+VALORES, OBJETIVO, PERGUNTAS e REGRAS
+dentro do Expert SINTA e salve como .bcm. Detalhes em "GUIA_Expert_SINTA.txt".
+
+Sintaxe de regra:
+  SE <variavel> = <valor> [E/OU ...] ENTAO <objetivo> = <valor> CNF <0-100>%
+Objetivo "filme" e' MULTIVALORADO -> o SINTA lista varias recomendacoes
+ordenadas pelo fator de confianca.
+
+
+================================================================================
+ 1. SOBRE O SISTEMA
+================================================================================
+Nome:    CineGuia - Recomendador de Filmes e Series
+Autores: Leonardo Jose Reis Pinto
+Resumo:  Sistema especialista que recomenda filmes e series nacionais e
+         internacionais a partir do genero, duracao, epoca de lancamento,
+         origem, classificacao de publico, base (livro/HQ/fatos reais), estilo
+         predominante e premiacao.
+Operador de maior precedencia: conjuncao (E)
+Fator de confianca minimo para aceitar regra: 0
+
+
+================================================================================
+ 2. VARIAVEIS E VALORES
+================================================================================
+[V1] genero_filme            (MULTIVALORADA)
+     - acao
+     - aventura
+     - comedia
+     - drama
+     - ficcao cientifica
+     - terror
+     - suspense
+     - romance
+     - animacao
+     - crime ou policial
+     - fantasia
+     - musical
+     - serie
+
+[V2] duracao                 (univalorada)
+     - curta (ate 100 min)
+     - media (100 a 140 min)
+     - longa (acima de 140 min)
+     - episodica (serie)
+
+[V3] epoca                   (univalorada)
+     - classico (antes de 1990)
+     - anos 1990 a 2009
+     - recente (2010 em diante)
+
+[V4] origem                  (univalorada)
+     - nacional (brasileiro)
+     - estadunidense (Hollywood)
+     - outra
+
+[V5] publico                 (univalorada)
+     - livre ou familia
+     - adolescente
+     - adulto
+
+[V6] baseado_em              (univalorada)
+     - historia real
+     - livro ou HQ
+     - roteiro original
+
+[V7] estilo                  (MULTIVALORADA)
+     - intenso / adrenalina
+     - emocionante
+     - engracado
+     - assustador
+     - reflexivo
+     - epico
+
+[V8] ator_principal          (MULTIVALORADA)
+     - Al Pacino
+     - Leonardo DiCaprio
+     - Robert Downey Jr.
+     - Brad Pitt
+     - Tom Hanks
+     - Keanu Reeves
+     - Matthew McConaughey
+     - Joaquin Phoenix
+     - Jack Nicholson
+     - Samuel L. Jackson
+     - Michael J. Fox
+     - Mark Hamill
+     - Jamie Foxx
+     - Emma Stone
+     - Bryan Cranston
+     - Millie Bobby Brown
+     - Alvaro Morte
+     - Wagner Moura
+     - Fernanda Montenegro
+     - Selton Mello
+     - Paulo Gustavo
+     - Sonia Braga
+     - indiferente
+
+[V9] premiado                (univalorada)
+     - sim
+     - indiferente
+
+[OBJ] filme                  (MULTIVALORADA)  -> ver secao 3
+
+
+================================================================================
+ 3. OBJETIVO
+================================================================================
+Variavel-objetivo:  filme   (multivalorada)
+
+VALORES da variavel "filme":
+  O Poderoso Chefao; Pulp Fiction; Interestelar; A Origem; Vingadores: Ultimato;
+  O Senhor dos Aneis; Matrix; Forrest Gump; Titanic; Clube da Luta; O Rei Leao;
+  Toy Story; Coringa; Parasita; De Volta para o Futuro; O Iluminado;
+  Invocacao do Mal; Star Wars: Uma Nova Esperanca; Jurassic Park; Django Livre;
+  La La Land; Avatar; Cidade de Deus; Tropa de Elite; Central do Brasil;
+  O Auto da Compadecida; Minha Mae e uma Peca; Bacurau; Round 6; Breaking Bad;
+  Stranger Things; La Casa de Papel
+
+
+================================================================================
+ 4. PERGUNTAS
+================================================================================
+genero_filme : Qual(is) genero(s) voce quer assistir? (pode marcar varios)
+duracao      : Qual duracao voce prefere?
+epoca        : De qual epoca?
+origem       : Qual a origem da producao?
+publico      : Para qual publico?
+baseado_em   : A historia deve ser baseada em algo?
+estilo       : Qual o clima/estilo desejado? (pode marcar varios)
+ator_principal : Ha algum(ns) ator(es)/atriz(es) que voce quer ver? (marque "indiferente" se nao)
+premiado     : Faz questao de ser premiado/aclamado?
+
+
+================================================================================
+ 5. REGRAS  (56 regras)
+================================================================================
+As regras 1 a 32 recomendam por ATRIBUTOS (genero, duracao, epoca, origem...);
+nelas o ator NAO e' obrigatorio. As regras 33 a 56 recomendam DIRETAMENTE POR
+ATOR/ATRIZ, atendendo ao criterio "atores" do enunciado: basta o usuario marcar
+um nome em "ator_principal" para receber os filmes daquele artista.
+
+--- CLASSICOS E INTERNACIONAIS ---
+
+Regra 1
+SE genero_filme = crime ou policial
+E genero_filme = drama
+E duracao = longa (acima de 140 min)
+E epoca = classico (antes de 1990)
+E origem = estadunidense (Hollywood)
+E publico = adulto
+E premiado = sim
+ENTAO filme = O Poderoso Chefao CNF 95%
+
+Regra 2
+SE genero_filme = crime ou policial
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E origem = estadunidense (Hollywood)
+E publico = adulto
+E estilo = intenso / adrenalina
+ENTAO filme = Pulp Fiction CNF 90%
+
+Regra 3
+SE genero_filme = ficcao cientifica
+E genero_filme = drama
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E estilo = reflexivo
+ENTAO filme = Interestelar CNF 93%
+
+Regra 4
+SE genero_filme = ficcao cientifica
+E genero_filme = suspense
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E estilo = reflexivo
+ENTAO filme = A Origem CNF 90%
+
+Regra 5
+SE genero_filme = acao
+E genero_filme = aventura
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E baseado_em = livro ou HQ
+E estilo = epico
+ENTAO filme = Vingadores: Ultimato CNF 90%
+
+Regra 6
+SE genero_filme = fantasia
+E genero_filme = aventura
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E baseado_em = livro ou HQ
+E estilo = epico
+ENTAO filme = O Senhor dos Aneis CNF 92%
+
+Regra 7
+SE genero_filme = ficcao cientifica
+E genero_filme = acao
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E estilo = intenso / adrenalina
+ENTAO filme = Matrix CNF 92%
+
+Regra 8
+SE genero_filme = drama
+E genero_filme = comedia
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E estilo = emocionante
+E premiado = sim
+ENTAO filme = Forrest Gump CNF 90%
+
+Regra 9
+SE genero_filme = romance
+E genero_filme = drama
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E estilo = emocionante
+E premiado = sim
+ENTAO filme = Titanic CNF 90%
+
+Regra 10
+SE genero_filme = drama
+E genero_filme = suspense
+E duracao = media (100 a 140 min)
+E epoca = anos 1990 a 2009
+E publico = adulto
+E baseado_em = livro ou HQ
+ENTAO filme = Clube da Luta CNF 88%
+
+Regra 11
+SE genero_filme = animacao
+E genero_filme = aventura
+E duracao = curta (ate 100 min)
+E epoca = anos 1990 a 2009
+E publico = livre ou familia
+E estilo = emocionante
+ENTAO filme = O Rei Leao CNF 92%
+
+Regra 12
+SE genero_filme = animacao
+E genero_filme = comedia
+E duracao = curta (ate 100 min)
+E publico = livre ou familia
+E estilo = engracado
+ENTAO filme = Toy Story CNF 90%
+
+Regra 13
+SE genero_filme = drama
+E genero_filme = crime ou policial
+E duracao = media (100 a 140 min)
+E epoca = recente (2010 em diante)
+E publico = adulto
+E baseado_em = livro ou HQ
+E premiado = sim
+ENTAO filme = Coringa CNF 90%
+
+Regra 14
+SE genero_filme = drama
+E genero_filme = suspense
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E origem = outra
+E premiado = sim
+ENTAO filme = Parasita CNF 93%
+
+Regra 15
+SE genero_filme = ficcao cientifica
+E genero_filme = comedia
+E duracao = longa (acima de 140 min)
+E epoca = classico (antes de 1990)
+E publico = livre ou familia
+E estilo = engracado
+ENTAO filme = De Volta para o Futuro CNF 90%
+
+Regra 16
+SE genero_filme = terror
+E genero_filme = suspense
+E duracao = longa (acima de 140 min)
+E epoca = classico (antes de 1990)
+E publico = adulto
+E baseado_em = livro ou HQ
+E estilo = assustador
+ENTAO filme = O Iluminado CNF 90%
+
+Regra 17
+SE genero_filme = terror
+E duracao = media (100 a 140 min)
+E epoca = recente (2010 em diante)
+E publico = adulto
+E baseado_em = historia real
+E estilo = assustador
+ENTAO filme = Invocacao do Mal CNF 88%
+
+Regra 18
+SE genero_filme = ficcao cientifica
+E genero_filme = aventura
+E duracao = longa (acima de 140 min)
+E epoca = classico (antes de 1990)
+E publico = livre ou familia
+E estilo = epico
+ENTAO filme = Star Wars: Uma Nova Esperanca CNF 92%
+
+Regra 19
+SE genero_filme = aventura
+E genero_filme = ficcao cientifica
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E publico = adolescente
+E estilo = intenso / adrenalina
+ENTAO filme = Jurassic Park CNF 90%
+
+Regra 20
+SE genero_filme = acao
+E genero_filme = drama
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E publico = adulto
+E estilo = intenso / adrenalina
+ENTAO filme = Django Livre CNF 88%
+
+Regra 21
+SE genero_filme = musical
+E genero_filme = romance
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E estilo = emocionante
+E premiado = sim
+ENTAO filme = La La Land CNF 90%
+
+Regra 22
+SE genero_filme = ficcao cientifica
+E genero_filme = aventura
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E publico = livre ou familia
+E estilo = epico
+ENTAO filme = Avatar CNF 88%
+
+--- CINEMA NACIONAL (BRASIL) ---
+
+Regra 23
+SE genero_filme = crime ou policial
+E genero_filme = drama
+E duracao = longa (acima de 140 min)
+E epoca = anos 1990 a 2009
+E origem = nacional (brasileiro)
+E publico = adulto
+E baseado_em = historia real
+E premiado = sim
+ENTAO filme = Cidade de Deus CNF 95%
+
+Regra 24
+SE genero_filme = acao
+E genero_filme = crime ou policial
+E duracao = media (100 a 140 min)
+E epoca = anos 1990 a 2009
+E origem = nacional (brasileiro)
+E publico = adulto
+E estilo = intenso / adrenalina
+ENTAO filme = Tropa de Elite CNF 92%
+
+Regra 25
+SE genero_filme = drama
+E duracao = media (100 a 140 min)
+E epoca = anos 1990 a 2009
+E origem = nacional (brasileiro)
+E estilo = emocionante
+E premiado = sim
+ENTAO filme = Central do Brasil CNF 92%
+
+Regra 26
+SE genero_filme = comedia
+E duracao = media (100 a 140 min)
+E epoca = anos 1990 a 2009
+E origem = nacional (brasileiro)
+E publico = livre ou familia
+E estilo = engracado
+ENTAO filme = O Auto da Compadecida CNF 90%
+
+Regra 27
+SE genero_filme = comedia
+E duracao = curta (ate 100 min)
+E epoca = recente (2010 em diante)
+E origem = nacional (brasileiro)
+E publico = livre ou familia
+E estilo = engracado
+ENTAO filme = Minha Mae e uma Peca CNF 88%
+
+Regra 28
+SE genero_filme = suspense
+E genero_filme = acao
+E duracao = longa (acima de 140 min)
+E epoca = recente (2010 em diante)
+E origem = nacional (brasileiro)
+E publico = adulto
+ENTAO filme = Bacurau CNF 90%
+
+--- SERIES (NACIONAIS E INTERNACIONAIS) ---
+
+Regra 29
+SE genero_filme = serie
+E genero_filme = suspense
+E duracao = episodica (serie)
+E epoca = recente (2010 em diante)
+E origem = outra
+E publico = adulto
+E estilo = intenso / adrenalina
+ENTAO filme = Round 6 CNF 90%
+
+Regra 30
+SE genero_filme = serie
+E genero_filme = crime ou policial
+E genero_filme = drama
+E duracao = episodica (serie)
+E epoca = recente (2010 em diante)
+E origem = estadunidense (Hollywood)
+E publico = adulto
+E premiado = sim
+ENTAO filme = Breaking Bad CNF 93%
+
+Regra 31
+SE genero_filme = serie
+E genero_filme = ficcao cientifica
+E genero_filme = terror
+E duracao = episodica (serie)
+E epoca = recente (2010 em diante)
+E origem = estadunidense (Hollywood)
+E publico = adolescente
+ENTAO filme = Stranger Things CNF 90%
+
+Regra 32
+SE genero_filme = serie
+E genero_filme = crime ou policial
+E genero_filme = acao
+E duracao = episodica (serie)
+E epoca = recente (2010 em diante)
+E origem = outra
+E publico = adulto
+E estilo = intenso / adrenalina
+ENTAO filme = La Casa de Papel CNF 88%
+
+--- REGRAS POR ATOR / ATRIZ ---
+
+Regra 33
+SE ator_principal = Leonardo DiCaprio
+ENTAO filme = Titanic CNF 85%
+
+Regra 34
+SE ator_principal = Leonardo DiCaprio
+ENTAO filme = A Origem CNF 85%
+
+Regra 35
+SE ator_principal = Leonardo DiCaprio
+ENTAO filme = Django Livre CNF 80%
+
+Regra 36
+SE ator_principal = Al Pacino
+ENTAO filme = O Poderoso Chefao CNF 85%
+
+Regra 37
+SE ator_principal = Samuel L. Jackson
+ENTAO filme = Pulp Fiction CNF 85%
+
+Regra 38
+SE ator_principal = Matthew McConaughey
+ENTAO filme = Interestelar CNF 85%
+
+Regra 39
+SE ator_principal = Robert Downey Jr.
+ENTAO filme = Vingadores: Ultimato CNF 85%
+
+Regra 40
+SE ator_principal = Keanu Reeves
+ENTAO filme = Matrix CNF 85%
+
+Regra 41
+SE ator_principal = Tom Hanks
+ENTAO filme = Forrest Gump CNF 85%
+
+Regra 42
+SE ator_principal = Brad Pitt
+ENTAO filme = Clube da Luta CNF 85%
+
+Regra 43
+SE ator_principal = Joaquin Phoenix
+ENTAO filme = Coringa CNF 85%
+
+Regra 44
+SE ator_principal = Michael J. Fox
+ENTAO filme = De Volta para o Futuro CNF 85%
+
+Regra 45
+SE ator_principal = Jack Nicholson
+ENTAO filme = O Iluminado CNF 85%
+
+Regra 46
+SE ator_principal = Mark Hamill
+ENTAO filme = Star Wars: Uma Nova Esperanca CNF 85%
+
+Regra 47
+SE ator_principal = Jamie Foxx
+ENTAO filme = Django Livre CNF 85%
+
+Regra 48
+SE ator_principal = Emma Stone
+ENTAO filme = La La Land CNF 85%
+
+Regra 49
+SE ator_principal = Wagner Moura
+ENTAO filme = Tropa de Elite CNF 88%
+
+Regra 50
+SE ator_principal = Fernanda Montenegro
+ENTAO filme = Central do Brasil CNF 88%
+
+Regra 51
+SE ator_principal = Selton Mello
+ENTAO filme = O Auto da Compadecida CNF 85%
+
+Regra 52
+SE ator_principal = Paulo Gustavo
+ENTAO filme = Minha Mae e uma Peca CNF 88%
+
+Regra 53
+SE ator_principal = Sonia Braga
+ENTAO filme = Bacurau CNF 85%
+
+Regra 54
+SE ator_principal = Bryan Cranston
+ENTAO filme = Breaking Bad CNF 88%
+
+Regra 55
+SE ator_principal = Millie Bobby Brown
+ENTAO filme = Stranger Things CNF 85%
+
+Regra 56
+SE ator_principal = Alvaro Morte
+ENTAO filme = La Casa de Papel CNF 85%
+
+================================================================================
+ FIM DA BASE 2
+================================================================================
