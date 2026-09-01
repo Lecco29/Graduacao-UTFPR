@@ -12,4 +12,5 @@ commits de cada repositorio original foi preservado na integra.
 |---|---|---|
 | `Estrutura-de-Dados-III` | `Estrutura-de-Dados-III` | 8 |
 | `Fundamentos-de-IA` | `Listas-Fundamentos-de-IA` | 15 |
+| `Inteligência Artificial Aplicada` | - | vazia |
 | `Projeto-de-Web` | `Projeto-final-web` | 2 |
