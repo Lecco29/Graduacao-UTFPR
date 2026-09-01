@@ -1,0 +1,41 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# Java / Maven / Gradle
+target/
+.gradle/
+*.class
+
+# C / C++
+*.o
+*.out
+*.exe
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
