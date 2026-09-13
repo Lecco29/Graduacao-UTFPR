@@ -1,5 +1,7 @@
 # Trabalho 1 - Naive Bayes no Weka
 
+Feito em dupla com Mayara Rodrigues Pereira.
+
 Classificação de comentários em positivo ou negativo usando o Naive Bayes do Weka,
 sobre as bases de avaliações do IMDb, Amazon e Yelp (Sentiment Labelled Sentences,
 UCI). As três fontes foram juntadas em uma base única de 3000 registros, 1500 de
